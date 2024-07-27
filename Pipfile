@@ -10,6 +10,7 @@ drf-yasg = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 whitenoise = "*"
+gunicorn = "*"
 
 [dev-packages]
 
