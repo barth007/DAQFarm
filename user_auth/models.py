@@ -71,6 +71,12 @@ class CustomUser(AbstractBaseUser, BaseModel, PermissionsMixin):
         help_text=is_admin_[0],
         verbose_name=is_admin_[1],
         )
+    is_staff = models.BooleanField(
+        default=False,
+        help_text=is_staff_[0],
+        verbose_name=is_staff_[1],
+        )
+
     
     objects = CustomUserManager()
 

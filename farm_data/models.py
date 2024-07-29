@@ -65,7 +65,7 @@ class Plot(BaseModel):
         max_length=250,
         verbose_name=current_crop_type_[1],
         help_text=current_crop_type_[0],
-        unique=True,
+        unique=False,
     )
     plot_status = models.CharField(
         max_length=50,
