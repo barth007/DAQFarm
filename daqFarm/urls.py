@@ -28,10 +28,10 @@ schema_view = get_schema_view(
     openapi.Info(
         title="Daq Farm API's Endpoint",
         default_version='v1',
-        description="Daq Farm api endpoint for monitoring certain parameters on the farm",
+        description="DAQ Farm api endpoint for monitoring certain parameters on the farm",
         terms_of_service="https://www.example.com/terms/",
         contact=openapi.Contact(email="basseybartholomew237@gmail.com"),
-        license=openapi.License(name="MIT License Copyright (c) 2024 Bartholomew Bassey"),
+        license=openapi.License(name="MIT License Copyright (c) 2024 TD4PAI HUB"),
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
