@@ -22,7 +22,7 @@ from farm_data.selectors.selector_get_plot import get_plot
 class PlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plot
-        exclude = ['status']
+        exclude = ['status', 'plot_status']
 
 class PlotHardWareDataSerializer(serializers.ModelSerializer, PlotValidationMixin):
     class Meta:
