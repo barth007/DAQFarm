@@ -11,7 +11,6 @@ class ElementDataListCreateView(mixins.ListModelMixin, mixins.CreateModelMixin, 
     serializer_class = ElementDataSerializer
 
 
-
     def get(self, request: Request, *args: Any, **kwargs: Any )-> Response:
         """
         fetching a list of all element data
