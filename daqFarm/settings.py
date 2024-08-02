@@ -38,8 +38,12 @@ DEBUG = os.environ.get('DEBUG', True) == 'True'
 print(DEBUG)
 
 
-
+# SECURE_SSL_REDIRECT = True
+# CORS_ALLOWED_ORIGINS = [
+#     "https://a0da-129-205-113-179.ngrok-free.app",
+# ]
 ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -166,7 +170,6 @@ USE_TZ = True
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-DEBUG = False
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
@@ -196,6 +199,8 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+
 
 AUTH_USER_MODEL = "user_auth.CustomUser"
 
