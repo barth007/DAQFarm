@@ -88,18 +88,15 @@ class CustomUser(AbstractBaseUser, BaseModel, PermissionsMixin):
 
     def has_perm(self, perm, obj=None)->bool:
         "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label)->bool:
         "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
         return True
 
     @property
-    def is_staff(self)-> bool:
+    def is_admin_member(self)-> bool:
         "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
         return self.is_admin
     
 
