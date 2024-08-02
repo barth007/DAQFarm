@@ -105,19 +105,19 @@ class PlotHardWareData(BaseModel):
     )= HELP_TEXT_AND_VERBOSE_NAME['plot_hardware'].values()
 
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
-    battery_status = models.DecimalField(
+    batteryStatus = models.DecimalField(
         max_digits=4,
         decimal_places=2,
         verbose_name=battery_status_[1],
         help_text=battery_status_[0],
     )
-    solar_panel_voltage = models.DecimalField(
+    solarPanelVoltage = models.DecimalField(
         max_digits=4,
         decimal_places=2,
         verbose_name=solar_panel_voltage_[1],
         help_text=solar_panel_voltage_[0]
     )
-    board_temperature = models.DecimalField(
+    boardTemperature = models.DecimalField(
         max_digits=4, 
         decimal_places=1,
         verbose_name=board_temperature_[1],
@@ -126,11 +126,11 @@ class PlotHardWareData(BaseModel):
     
     def clean(self) -> None:
         super().clean()
-        if self.battery_status < 0 or self.battery_status > 100:
+        if self.batteryStatus < 0 or self.batteryStatus > 100:
             raise ValidationError({'battery_status': 'Battery status must be between 0 and 100.'})
-        if self.solar_panel_voltage < 0:
+        if self.solarPanelVoltage < 0:
             raise ValidationError({'solar_panel_voltage': 'Solar panel voltage cannot be negative.'})
-        if self.board_temperature < -50 or self.board_temperature > 150:
+        if self.boardTemperature < -50 or self.boardTemperature > 150:
             raise ValidationError({'board_temperature': 'Board temperature must be between -50 and 150 degrees Celsius.'})
     
     def __str__(self) -> str:
@@ -153,19 +153,19 @@ class SoilData(BaseModel):
         verbose_name=moisture_[1],
         help_text=moisture_[0]
     )
-    ph_level = models.DecimalField(
+    phLevel = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name=ph_level_[1],
         help_text=ph_level_[0]
     )
-    electrical_conductivity = models.DecimalField(
+    electricalConductivity = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name=electrical_conductivity_[1],
         help_text=electrical_conductivity_[0]
     )
-    exchangeable_acid = models.DecimalField(
+    exchangeableAcid = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name=exchangeable_acid_[1],
@@ -176,11 +176,11 @@ class SoilData(BaseModel):
         super.clean()
         if self.moisture < 0 or self.moisture > 100:
             raise ValidationError({'moisture': 'Moisture must be between 0 and 100.'})
-        if self.ph_level < 0 or self.ph_level > 14:
+        if self.phLevel < 0 or self.phLevel > 14:
             raise ValidationError({'ph_level': 'pH level must be between 0 and 14.'})
-        if  self.electrical_conductivity < 0 :
+        if  self.electricalConductivity < 0 :
             raise ValidationError({'electrical_conductivity': 'Electrical conductivity cannot be negative.'})
-        if self.exchangeable_acid < 0:
+        if self.exchangeableAcid < 0:
             raise ValidationError({'exhangeable_acid':'Exchangeable acidity cannot be negative'})
 
     def __str__(self)->str:
@@ -217,7 +217,7 @@ class EnvironmentalData(BaseModel):
         verbose_name=pressure_[1],
         help_text=pressure_[0]
     )
-    natural_gas = models.DecimalField(
+    naturalGas = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name=natural_gas_[1],
@@ -229,7 +229,7 @@ class EnvironmentalData(BaseModel):
         verbose_name=sunlight_[1],
         help_text=sunlight_[0]
     )
-    air_quality = models.DecimalField(
+    airQuality = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         verbose_name=air_quality_[1],
@@ -244,11 +244,11 @@ class EnvironmentalData(BaseModel):
             raise ValidationError({'humidity': 'Humidity must be between 0 and 100%.'})
         if self.pressure < 300 or self.pressure > 1100:
             raise ValidationError({'pressure': 'Pressure must be between 300 and 1100 hPa.'})
-        if self.natural_gas < 0:
+        if self.naturalGas < 0:
             raise ValidationError({'natural_gas': 'Natural gas concentration cannot be negative.'})
         if self.sunlight < 0:
             raise ValidationError({'sunlight': 'Sunlight intensity cannot be negative.'})
-        if self.air_quality < 0 or self.air_quality > 500:
+        if self.airQuality < 0 or self.airQuality > 500:
             raise ValidationError({'air_quality': 'Air quality index must be between 0 and 500.'})
 
     def __str__(self)-> str:
@@ -261,7 +261,7 @@ class Element(models.Model):
         element_value_,
     ) = HELP_TEXT_AND_VERBOSE_NAME['element'].values()
 
-    element_name = models.CharField(
+    elementName = models.CharField(
         max_length=50,
         unique=True,
         verbose_name=element_name_[1],
@@ -271,11 +271,11 @@ class Element(models.Model):
 
     def clean(self):
         super.clean()
-        if Element.objects.filter(element_name=self.element_name).exclude(pk=self.pk).exists():
+        if Element.objects.filter(element_name=self.elementName).exclude(pk=self.pk).exists():
             raise ValidationError({'element_name': 'An element with this name already exists'})
 
     def __str__(self)->str:
-        return self.element_name
+        return self.elementName
     
 class ElementData(BaseModel):
     (
@@ -284,7 +284,7 @@ class ElementData(BaseModel):
     ) = HELP_TEXT_AND_VERBOSE_NAME['element'].values()
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
-    element_value = models.DecimalField(
+    elementValue = models.DecimalField(
         max_digits=5,
         decimal_places=2,
         null=True,
@@ -294,5 +294,5 @@ class ElementData(BaseModel):
     )
 
     def __str__(self):
-        return f"{self.element.element_name}, {self.element_value} data for {self.plot.name}"
+        return f"{self.element.elementName}, {self.elementValue} data for {self.plot.name}"
 
