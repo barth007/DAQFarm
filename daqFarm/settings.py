@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 import dj_database_url
 
 
+
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,11 +40,10 @@ print(DEBUG)
 
 
 # SECURE_SSL_REDIRECT = True
-# CORS_ALLOWED_ORIGINS = [
-#     "https://a0da-129-205-113-179.ngrok-free.app",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "https://2081-105-112-124-41.ngrok-free.app",
+]
 ALLOWED_HOSTS = ['*']
-
 
 
 # Application definition
@@ -89,6 +89,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'farm_data.middleware.ConditionalCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -253,4 +254,30 @@ SWAGGER_SETTINGS = {
             'in': 'header'
         }
     }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'farm_data': {  
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }

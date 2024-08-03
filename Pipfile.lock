@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "58e4026f2f9d728fc47e6a6173dc89b66eb5854876bcbab065d48a9c00fec792"
+            "sha256": "c231ec063e708fd4fb20b044de658ca3dcd96661c75b8fd6e53bac4a44c8f51c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -183,11 +183,20 @@
         },
         "pyjwt": {
             "hashes": [
-                "sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de",
-                "sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320"
+                "sha256:3b02fb0f44517787776cf48f2ae25d8e14f300e6d7545a4315cee571a415e850",
+                "sha256:7e1e5b56cc735432a7369cbfa0efe50fa113ebecdc04ae6922deba8b84582d0c"
             ],
-            "markers": "python_version >= '3.7'",
-            "version": "==2.8.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==2.9.0"
+        },
+        "pyngrok": {
+            "hashes": [
+                "sha256:1e96ab1229736e2e030fa8975805ab1fa9e463178f83337fc07fdd2b4e8dbed6",
+                "sha256:4e43af9b2f21ceed8d213797028fe8823003f185b49792e4d383302365c81515"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==7.2.0"
         },
         "python-dotenv": {
             "hashes": [
