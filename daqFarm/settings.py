@@ -39,9 +39,11 @@ DEBUG = os.environ.get('DEBUG', True) == 'True'
 print(DEBUG)
 
 
-# SECURE_SSL_REDIRECT = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    '*'
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://daqfarm.vercel.app",
 ]
 ALLOWED_HOSTS = ['*']
 
