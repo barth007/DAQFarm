@@ -41,7 +41,7 @@ print(DEBUG)
 
 # SECURE_SSL_REDIRECT = True
 CORS_ALLOWED_ORIGINS = [
-    "https://2081-105-112-124-41.ngrok-free.app",
+    '*'
 ]
 ALLOWED_HOSTS = ['*']
 
