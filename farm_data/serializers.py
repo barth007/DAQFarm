@@ -45,10 +45,15 @@ class ElementSerializer(serializers.ModelSerializer):
         model = Element
         fields = '__all__'
 
+class ElementDataListSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        representation = super().to_representation(data)
+        return representation
 class ElementDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = ElementData
         exclude = ['status']
+        list_serializer_class = ElementDataListSerializer
 
 
 class PlotDetailSerializer(serializers.ModelSerializer):
