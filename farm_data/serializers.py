@@ -164,10 +164,11 @@ class SinglePlotSerializer(serializers.Serializer):
 
 class PlotWarningSerializer(serializers.ModelSerializer):
     warnings = serializers.SerializerMethodField()
+    last_sync_calculated_time = serializers.SerializerMethodField()
 
     class Meta:
         model = Plot
-        fields = ['id', 'name', 'plot_status', 'warnings']
+        fields = ['id', 'name', 'plot_status', 'warnings', 'last_sync_calculated_time']
 
     def get_warnings(self, obj):
         warnings = []
@@ -249,3 +250,6 @@ class PlotWarningSerializer(serializers.ModelSerializer):
                 })
 
         return warnings
+    def get_last_sync_calculated_time(self, obj):
+        plot_serializer = PlotSerializer(obj)
+        return plot_serializer.data.get('last_sync_calculated_time')
