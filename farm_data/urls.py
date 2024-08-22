@@ -23,6 +23,7 @@ from farm_data.views.views_element_value import (
     ElementDataretrieveView,
     ElementDataListCreateView
 )
+from farm_data.views.views_plot_warning import PlotWarningsView
 
 
 urlpatterns = [
@@ -39,4 +40,5 @@ urlpatterns = [
     path('elements/<int:pk>/', ElementretrieveUpdateDestroyView.as_view(), name='elements-retrieve'),
     path('element-data/', ElementDataListCreateView.as_view(), name='element-data-list-create'),
     path('element-data/<int:pk>/',  ElementDataretrieveView.as_view(), name='element-data-retrieve'),
+    path('warning/', PlotWarningsView.as_view(), name='warning')
     ]

@@ -2,9 +2,11 @@
 from django.db import models
 from typing import Dict, List
 from common.models import BaseModel
-from datetime import datetime, timedelta
 from django.utils.timesince import timesince
+from datetime import timedelta
+from django.utils import timezone
 from django.core.exceptions import ValidationError
+from .services import PlotManager
 
 HELP_TEXT_AND_VERBOSE_NAME: Dict[str, Dict[str, List[str]]] = {
     'plot':{
@@ -22,15 +24,13 @@ HELP_TEXT_AND_VERBOSE_NAME: Dict[str, Dict[str, List[str]]] = {
         'moisture':['Soil moisture percentage', 'Soil Moisture'],
         'ph_level': ['PH level of the soil', 'PH Level'],
         'electrical_conductivity': ['Electrical conductivity of the soil', 'Electrical Conductivity'],
-        'exchangeable_acid':['Exchangeable acidity in the soil', 'Exchangeable Acidity'],
+        'soil_temperature':['Temperature of the soil', 'Soil Temperature'],
     },
     'environment': {
         'temperature': ['Environment temperature', 'Temperature'],
         'humidity': ['Environment humdity percentage', 'Humidity'],
         'pressure': ['Atmospheric pressure', 'Pressure'],
         'natural_gas': ['Natural gas concentration', 'Natural Gas'],
-        'sunlight': ['Sunlight intensity', 'Sunlight'],
-        'air_quality':['Air quality of the enviroment', 'Air Quality']
     },
     'element': {
         'element_name': ['Name of the element', 'Element Name'],
@@ -81,6 +81,8 @@ class Plot(BaseModel):
         help_text=last_sync_time_[0],
     )
 
+    objects = PlotManager()
+
    
     def clean(self)-> None:
         super.clean()
@@ -90,7 +92,10 @@ class Plot(BaseModel):
 
     @property
     def last_sync_time_calculated(self) -> str:
-        return timesince(self.last_sync_time)
+        time_difference = timezone.now() - self.last_sync_time
+        if time_difference < timedelta(minutes=1):
+            return  f"{int(time_difference.total_seconds())} seconds"
+        return timesince(self.last_sync_time, timezone.now())
     
 
     def __str__(self)->str:
@@ -135,14 +140,14 @@ class PlotHardWareData(BaseModel):
     
     def __str__(self) -> str:
 
-        return self.plot.name
+        return f"Hardware data for {self.plot.name} "
     
 class SoilData(BaseModel):
     (
         moisture_,
         ph_level_,
         electrical_conductivity_,
-        exchangeable_acid_,
+        soil_temperature_,
     )=HELP_TEXT_AND_VERBOSE_NAME["soil"].values()
 
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
@@ -165,11 +170,12 @@ class SoilData(BaseModel):
         verbose_name=electrical_conductivity_[1],
         help_text=electrical_conductivity_[0]
     )
-    exchangeableAcid = models.DecimalField(
+    soilTemperature = models.DecimalField(
         max_digits=5,
         decimal_places=2,
-        verbose_name=exchangeable_acid_[1],
-        help_text=exchangeable_acid_[0]
+        null=True,
+        verbose_name=soil_temperature_[1],
+        help_text=soil_temperature_[0]
     )
 
     def clean(self):
@@ -193,8 +199,6 @@ class EnvironmentalData(BaseModel):
         humidity_,
         pressure_,
         natural_gas_,
-        sunlight_,
-        air_quality_,
     )=HELP_TEXT_AND_VERBOSE_NAME['environment'].values()
 
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
@@ -223,19 +227,6 @@ class EnvironmentalData(BaseModel):
         verbose_name=natural_gas_[1],
         help_text=natural_gas_[0]
     )
-    sunlight = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        verbose_name=sunlight_[1],
-        help_text=sunlight_[0]
-    )
-    airQuality = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        verbose_name=air_quality_[1],
-        help_text=air_quality_[0]
-    )
-
     def clean (self):
         super.clean()
         if self.temperature < -50 or self.temperature > 60:
