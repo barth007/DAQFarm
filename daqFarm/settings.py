@@ -64,6 +64,7 @@ EXTERNAL_APPS=[
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     'whitenoise.runserver_nostatic',
+    'django_filters',
 ]
 USER_DEFINED_APPS=[
     'user_auth.apps.UserAuthConfig',
@@ -282,4 +283,8 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }

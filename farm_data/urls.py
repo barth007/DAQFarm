@@ -24,6 +24,7 @@ from farm_data.views.views_element_value import (
     ElementDataListCreateView
 )
 from farm_data.views.views_plot_warning import PlotWarningsView
+from farm_data.views.view_filters import AverageSoilDataView, AverageEvironmentalDataView
 
 
 urlpatterns = [
@@ -40,5 +41,9 @@ urlpatterns = [
     path('elements/<int:pk>/', ElementretrieveUpdateDestroyView.as_view(), name='elements-retrieve'),
     path('element-data/', ElementDataListCreateView.as_view(), name='element-data-list-create'),
     path('element-data/<int:pk>/',  ElementDataretrieveView.as_view(), name='element-data-retrieve'),
-    path('warning/', PlotWarningsView.as_view(), name='warning')
+    path('warning/', PlotWarningsView.as_view(), name='warning'),
+    path('average-soil-data-filter/', AverageSoilDataView.as_view(), name='average-soil-data-filter'),
+    path('average-environment-filter/', AverageEvironmentalDataView.as_view(), name='average-environment-filter'),
+
+
     ]
