@@ -58,9 +58,11 @@ class ElementDataListSerializer(serializers.ListSerializer):
         representation = super().to_representation(data)
         return representation
 class ElementDataSerializer(serializers.ModelSerializer):
+    element_name = serializers.CharField(source='element.elementName', read_only=True)
     class Meta:
         model = ElementData
-        exclude = ['status']
+        # exclude = ['status']
+        fields = ['element', 'element_name', 'elementValue', 'plot']
         list_serializer_class = ElementDataListSerializer
 
 

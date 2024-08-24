@@ -2,6 +2,8 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.utils import timezone
+from datetime import timedelta
 from django.db.models import Avg
 from farm_data.models import SoilData, EnvironmentalData
 from farm_data.selectors.selector_filters import SoilDataFilter, EnvironmentalDataFilter
@@ -18,8 +20,8 @@ class AverageSoilDataView(APIView):
         Returns:
         - Response: The HTTP response object with the average soil temperature.
         """
-        
-        filtered_qs= SoilDataFilter(data=request.GET, queryset=SoilData.objects.all())
+        last_7_days = timezone.now() - timedelta(days=7)
+        filtered_qs= SoilDataFilter(data=request.GET, queryset=SoilData.objects.filter(created_at__gte=last_7_days))
         averages = filtered_qs.qs.aggregate(
             avg_soil_temp=Avg('soilTemperature'),
             avg_moisture=Avg('moisture'),
@@ -30,7 +32,8 @@ class AverageSoilDataView(APIView):
 
 class AverageEvironmentalDataView(APIView):
     def get(self, request, *args, **kwargs):
-        filtered_qs = EnvironmentalDataFilter(data=request.GET, queryset=EnvironmentalData.objects.all())
+        last_7_days = timezone.now() - timedelta(days=7)
+        filtered_qs = EnvironmentalDataFilter(data=request.GET, queryset=EnvironmentalData.objects.filter(created_at__gte=last_7_days))
         averages = filtered_qs.qs.aggregate(
             avg_environ_temp= Avg('temperature'),
             avg_environ_pressure = Avg('pressure'),
