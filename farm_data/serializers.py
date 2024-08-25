@@ -61,8 +61,7 @@ class ElementDataSerializer(serializers.ModelSerializer):
     element_name = serializers.CharField(source='element.elementName', read_only=True)
     class Meta:
         model = ElementData
-        # exclude = ['status']
-        fields = ['element', 'element_name', 'elementValue', 'plot']
+        fields = ['id','element', 'element_name', 'elementValue', 'plot', 'created_at', 'updated_at']
         list_serializer_class = ElementDataListSerializer
 
 
