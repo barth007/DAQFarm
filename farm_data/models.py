@@ -19,6 +19,8 @@ HELP_TEXT_AND_VERBOSE_NAME: Dict[str, Dict[str, List[str]]] = {
         'solar_panel_voltage':['Voltage of the solar panel', 'Solar panel voltage'],
         'board_temperature': ['Temperature of the board', 'Board Temperature'],
         'battery_status':['Battery status percentage', 'Battery status'],
+        'orientation': ['Orientation of the device', 'Orientation'],
+        'local_time': ['Local time of the device', 'Local Time'],
     },
     'soil':{
         'moisture':['Soil moisture percentage', 'Soil Moisture'],
@@ -31,6 +33,7 @@ HELP_TEXT_AND_VERBOSE_NAME: Dict[str, Dict[str, List[str]]] = {
         'humidity': ['Environment humdity percentage', 'Humidity'],
         'pressure': ['Atmospheric pressure', 'Pressure'],
         'natural_gas': ['Natural gas concentration', 'Natural Gas'],
+        'light_intensity': ['Sunlight intensity', 'Sunlight Intensity'],
     },
     'element': {
         'element_name': ['Name of the element', 'Element Name'],
@@ -107,6 +110,8 @@ class PlotHardWareData(BaseModel):
         solar_panel_voltage_,
         battery_status_,
         board_temperature_,
+        orientation_,
+        local_time_,
     )= HELP_TEXT_AND_VERBOSE_NAME['plot_hardware'].values()
 
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
@@ -128,7 +133,20 @@ class PlotHardWareData(BaseModel):
         verbose_name=board_temperature_[1],
         help_text=board_temperature_[0]
     )
-    
+    orientation = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=orientation_[1],
+        help_text=orientation_[0]
+    )
+    localTime = models.DateTimeField(
+        auto_now_add=False,
+        null = True,
+        verbose_name=local_time_[1],
+        help_text=local_time_[0]
+    )  
     def clean(self) -> None:
         super().clean()
         if self.batteryStatus < 0 or self.batteryStatus > 100:
@@ -199,6 +217,7 @@ class EnvironmentalData(BaseModel):
         humidity_,
         pressure_,
         natural_gas_,
+        light_intensity_,
     )=HELP_TEXT_AND_VERBOSE_NAME['environment'].values()
 
     plot = models.ForeignKey(Plot, on_delete=models.CASCADE)
@@ -226,6 +245,13 @@ class EnvironmentalData(BaseModel):
         decimal_places=2,
         verbose_name=natural_gas_[1],
         help_text=natural_gas_[0]
+    )
+    lightIntensity = models.DecimalField(    
+        max_digits=5,
+        decimal_places=2,
+        null=True,
+        verbose_name=light_intensity_[1],
+        help_text=light_intensity_[0]
     )
     def clean (self):
         super.clean()
