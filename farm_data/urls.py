@@ -25,6 +25,7 @@ from farm_data.views.views_element_value import (
 )
 from farm_data.views.views_plot_warning import PlotWarningsView
 from farm_data.views.view_filters import AverageSoilDataView, AverageEvironmentalDataView
+from farm_data.views.views_average import AverageDataPerDayView
 
 
 urlpatterns = [
@@ -44,6 +45,7 @@ urlpatterns = [
     path('warning/', PlotWarningsView.as_view(), name='warning'),
     path('average-soil-data-filter/', AverageSoilDataView.as_view(), name='average-soil-data-filter'),
     path('average-environment-filter/', AverageEvironmentalDataView.as_view(), name='average-environment-filter'),
+    path('average-data-per-day/', AverageDataPerDayView.as_view(), name='average-data-per-day')
 
 
     ]
