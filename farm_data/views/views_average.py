@@ -71,8 +71,8 @@ class AverageDataPerDayView(APIView):
             'soil_temperature': format_data(soil_data, {'avg': 'avg_soil_temp', 'max': 'max_soil_temp', 'min': 'min_soil_temp'}),
             'ph': format_data(soil_data, {'avg': 'avg_ph', 'max': 'max_ph', 'min': 'min_ph'}),
             'moisture': format_data(soil_data, {'avg': 'avg_moisture', 'max': 'max_moisture', 'min': 'min_moisture'}),
-            'environmental_temperature': format_data(environmental_data, {'avg': 'avg_temperature', 'max': 'max_temperature', 'min': 'min_temperature'}),
-            'humidity': format_data(environmental_data, {'avg': 'avg_humidity', 'max': 'max_humidity', 'min': 'min_humidity'}),
-            'pressure': format_data(environmental_data, {'avg': 'avg_pressure', 'max': 'max_pressure', 'min': 'min_pressure'}),
+            'environmental_temperature': format_data(environmental_data, {'avg': 'avg_environ_temp', 'max': 'max_environ_temp', 'min': 'min_environ_temp'}),
+            'humidity': format_data(environmental_data, {'avg': 'avg_environ_humidity', 'max': 'max_environ_humidity', 'min': 'min_environ_humidity'}),
+            'pressure': format_data(environmental_data, {'avg': 'avg_environ_pressure', 'max': 'max_environ_pressure', 'min': 'min_environ_pressure'}),
         }
         return Response(response_data, status=status.HTTP_200_OK)

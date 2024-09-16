@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-import os
+import os, sys
 from pathlib import Path
 from whitenoise.storage import CompressedManifestStaticFilesStorage
 from datetime import timedelta
@@ -126,6 +126,16 @@ if not DEBUG:
     DATABASES = {
         "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
     }
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql',
+    #         'NAME': os.getenv('DATABASE_NAME'),
+    #         'USER': os.getenv('DATABASE_USER'),
+    #         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+    #         'HOST': os.getenv('DATABASE_HOST'),
+    #         'PORT': os.getenv('DATABASE_PORT', '5432'),
+    #     }
+    # }
 else:
     DATABASES = {
         'default': {
@@ -288,3 +298,14 @@ LOGGING = {
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+
+
+#for test cases
+if 'test' in sys.argv:
+    DATABASES={
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:'
+        }
+    }
